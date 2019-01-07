@@ -8,9 +8,9 @@ from .canvas import Canvas
 class InitTest(AbstractTest):
 
     def __init__(self, parent):
-        super().__init__(parent, "No init test")
+        super().__init__(parent, "Init opengl 2.1")
 
-        self.log = MHLog("init.txt")
+        self.log = MHLog("init21.txt")
 
         self.outputWidget = Canvas(parent, logger=self.log)
 

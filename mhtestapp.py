@@ -27,19 +27,15 @@ except:
 
 log.debug("Finished testing imports")
 
-
-
 log.debug("\nPython, Qt and NumPy Version information")
 log.debug("--------------------------------")
 log.debug("Python version", sys.version_info)
-log.debug("Effective QT version", QT_VERSION_STR)
+log.debug("Effective Qt version", QT_VERSION_STR)
+log.debug("Effective PyQt version", PYQT_VERSION_STR)
 log.debug("Effective numpy version", numpy.version.full_version)
 log.debug("--------------------------------\n")
 
-
 log.debug("Entering main script")
-
-
 
 from mhtestapp import MainWin
 
