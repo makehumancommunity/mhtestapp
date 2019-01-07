@@ -11,6 +11,8 @@ from PyQt5.QtOpenGL import QGLFormat
 
 from .util import log
 
+import sys
+
 class Canvas(QOpenGLWidget):
 
     def __init__(self, parent=None, requestedGLVersion=(2,1), logger=log):
@@ -104,13 +106,15 @@ class Canvas(QOpenGLWidget):
             print ("---\n")
 
         self.profile = QOpenGLVersionProfile()
-        self.profile.setProfile(QSurfaceFormat.CoreProfile)
+        if self.requestedVersion[0] > 2:
+            self.profile.setProfile(QSurfaceFormat.CoreProfile)
         self.profile.setVersion(self.requestedVersion[0],self.requestedVersion[1])
 
         self.gl = self.context().versionFunctions(self.profile)
 
         if self.gl is None:
-            log.debug("Could not get GL functions for the selected version")
+            log.debug("Could not get GL functions for the selected version, quitting")
+            sys.exit(1)
             return
 
         self.gl.initializeOpenGLFunctions()
