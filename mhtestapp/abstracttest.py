@@ -58,10 +58,14 @@ class AbstractTest(QMainWindow):
         self.actualWidget.setMaximumWidth(500)
         self.actualWidget.setMinimumHeight(500)
         self.actualWidget.setMaximumHeight(500)
+        self.actualWidget.resize(500,500)
+
         self.rightLayout.addWidget(self.actualWidget)
 
         self.rightLayout.addStretch()
 
     def loadImage(self, imageName):
-        path = imagePath("dummy.png")
+        path = imagePath(imageName)
+        if not os.path.exists(path):
+            print("File does not exist: " + str(path))
         self.image.setPixmap(QPixmap(path))
