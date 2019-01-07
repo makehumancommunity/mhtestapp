@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import *
 from .helpwin import HelpWin
 
 from .dummytest import DummyTest
+from .noinittest import NoInitTest
 
 class MainWin(QWidget):
 
@@ -20,6 +21,7 @@ class MainWin(QWidget):
 
         self.testList = QListWidget()
         self.testList.addItem("01 (Dummy) -- Show an empty window to test the abstract test class")
+        self.testList.addItem("02 (NoInit) -- Show a default QOpenGLWidget to test if it can be constructed")
 
         self.mainLayout.addWidget(self.testList)
 
@@ -57,6 +59,9 @@ class MainWin(QWidget):
 
         if test == "dummy":
             self.dummy = DummyTest(self)
+
+        if test == "noinit":
+            self.noinit = NoInitTest(self)
 
     def _helpClick(self):
         helpWin = HelpWin(self)

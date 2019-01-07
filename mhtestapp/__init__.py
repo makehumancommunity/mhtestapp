@@ -10,7 +10,7 @@ __all__ = [
     "HelpWin",
     "AbstractTest",
     "rootDir",
-    "log"
+    "log",
 ]
 
 
