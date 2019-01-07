@@ -65,7 +65,7 @@ class MainWin(QWidget):
         if test == "noinit":
             self.noinit = NoInitTest(self)
 
-        if test == "init":
+        if test == "init21":
             self.inittest = InitTest21(self)
 
     def _helpClick(self):
