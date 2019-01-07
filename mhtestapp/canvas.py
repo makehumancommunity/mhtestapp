@@ -7,6 +7,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from PyQt5.QtOpenGL import QGLFormat
 
 from .util import log
 
@@ -103,8 +104,15 @@ class Canvas(QOpenGLWidget):
             print ("---\n")
 
         self.profile = QOpenGLVersionProfile()
+        self.profile.setProfile(QSurfaceFormat.CoreProfile)
         self.profile.setVersion(self.requestedVersion[0],self.requestedVersion[1])
+
         self.gl = self.context().versionFunctions(self.profile)
+
+        if self.gl is None:
+            log.debug("Could not get GL functions for the selected version")
+            return
+
         self.gl.initializeOpenGLFunctions()
 
         # Enable GL capabilities we need
