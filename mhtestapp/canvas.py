@@ -80,6 +80,8 @@ class Canvas(QOpenGLWidget):
     # Do not override this, instead override setupGL
     def initializeGL(self):
 
+        self.log.debug("About to start general GL initialization")
+
         self.glLog = QOpenGLDebugLogger(self);
         if not self.glLog.initialize():
             self.log.debug("Unable to initialize GL logging")

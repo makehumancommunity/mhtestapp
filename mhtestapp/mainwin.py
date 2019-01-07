@@ -8,7 +8,7 @@ from .helpwin import HelpWin
 
 from .dummytest import DummyTest
 from .noinittest import NoInitTest
-from .inittest import InitTest
+from .inittest21 import InitTest21
 
 class MainWin(QWidget):
 
@@ -23,7 +23,7 @@ class MainWin(QWidget):
         self.testList = QListWidget()
         self.testList.addItem("01 (Dummy) -- Show an empty window to test the abstract test class")
         self.testList.addItem("02 (NoInit) -- Show a default QOpenGLWidget to test if it can be constructed")
-        self.testList.addItem("03 (Init) -- Show a QOpenGLWidget with basic initialization performed")
+        self.testList.addItem("03 (Init21) -- Show a v2.1 QOpenGLWidget with basic initialization performed")
 
         self.mainLayout.addWidget(self.testList)
 
@@ -66,7 +66,7 @@ class MainWin(QWidget):
             self.noinit = NoInitTest(self)
 
         if test == "init":
-            self.inittest = InitTest(self)
+            self.inittest = InitTest21(self)
 
     def _helpClick(self):
         helpWin = HelpWin(self)
