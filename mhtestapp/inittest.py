@@ -12,7 +12,7 @@ class InitTest(AbstractTest):
 
         self.log = MHLog("init.txt")
 
-        self.outputWidget = Canvas(parent)
+        self.outputWidget = Canvas(parent, logger=self.log)
 
         self.loadImage("init.png")
 
