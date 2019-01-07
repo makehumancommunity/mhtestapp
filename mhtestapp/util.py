@@ -44,8 +44,8 @@ def formatPath(path):
     return path
 
 def rootDir():
-    mypath = os.path.abspath( os.path.realpath(__file__) )
-    parentpath = os.path.join(mypath, "..")
+    mypath = os.path.abspath( os.path.dirname(os.path.realpath(__file__)) )
+    parentpath = os.path.abspath(os.path.join(mypath, ".."))
     return formatPath(parentpath)
 
 def imagePath(fileName):
