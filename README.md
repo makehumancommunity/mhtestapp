@@ -1,6 +1,7 @@
 # MakeHuman GL test application
 
-This is intended to be a user-friendly way to test if the new GL approach works on client machines.
+This is intended to be a user-friendly way to test if the new GL approach works on client machines. Once you have
+started the application, you will find a button for showing instructions.
 
 # How to run
 
