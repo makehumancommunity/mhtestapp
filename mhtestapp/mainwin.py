@@ -14,6 +14,7 @@ from .redtest import RedTest
 from .triangletest import TriangleTest
 from .quadtest import QuadTest
 from .colortritest import ColorTriangleTest
+from .rotationtest import RotationTest
 
 class MainWin(QWidget):
 
@@ -34,6 +35,7 @@ class MainWin(QWidget):
         self.testList.addItem("06 (Triangle) -- Draw two triangles to test Qt's VBO and VAO wrappers")
         self.testList.addItem("07 (Quad) -- Draw a quad to test if the GL backend supports quads")
         self.testList.addItem("08 (ColorTri) -- Draw a multicolored triangle to test passing both vertex and color data to Qt")
+        self.testList.addItem("09 (Rotation) -- Implement mouse rotation on a multicolored triangle")
 
         self.mainLayout.addWidget(self.testList)
 
@@ -92,6 +94,9 @@ class MainWin(QWidget):
 
         if test == "colortri":
             self.triangle = ColorTriangleTest(self)
+
+        if test == "rotation":
+            self.rot = RotationTest(self)
 
     def _helpClick(self):
         helpWin = HelpWin(self)
