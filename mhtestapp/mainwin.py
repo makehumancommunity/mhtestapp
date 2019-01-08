@@ -11,6 +11,7 @@ from .noinittest import NoInitTest
 from .inittest21 import InitTest21
 from .inittest41 import InitTest41
 from .redtest import RedTest
+from .triangletest import TriangleTest
 
 class MainWin(QWidget):
 
@@ -28,6 +29,7 @@ class MainWin(QWidget):
         self.testList.addItem("03 (Init21) -- Show an empty v2.1 QOpenGLWidget with basic initialization performed")
         self.testList.addItem("04 (Init41) -- Show an empty v4.1 Core QOpenGLWidget with basic initialization performed")
         self.testList.addItem("05 (Red) -- Clear background to red, to test if we can work with the GL context")
+        self.testList.addItem("06 (Triangle) -- Draw two triangles to test Qt's VBO and VAO wrappers")
 
         self.mainLayout.addWidget(self.testList)
 
@@ -77,6 +79,9 @@ class MainWin(QWidget):
 
         if test == "red":
             self.red = RedTest(self)
+
+        if test == "triangle":
+            self.triangle = TriangleTest(self)
 
     def _helpClick(self):
         helpWin = HelpWin(self)
