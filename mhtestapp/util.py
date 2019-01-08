@@ -113,6 +113,17 @@ def logDir():
     os.makedirs(logDir, exist_ok=True)
     return logDir
 
+def testDataPath(testName, fileName):
+    tf = os.path.join(rootDir(),"testdata",testName,fileName)
+    return formatPath(tf)
+
+def testDataAsString(testName, fileName):
+    fn = testDataPath(testName, fileName)
+    data = None
+    with open(fn,"r") as f:
+        data = f.read()
+    return data
+
 class MHLog:
 
     def __init__(self, fileName = "mainlog.txt"):
