@@ -110,10 +110,28 @@ class Canvas(QOpenGLWidget):
             self.profile.setProfile(QSurfaceFormat.CoreProfile)
         self.profile.setVersion(self.requestedVersion[0],self.requestedVersion[1])
 
-        self.gl = self.context().versionFunctions(self.profile)
+        ctx = None
+
+        log.debug("About to request the GL context from the widget")
+        try:
+            ctx = self.context()
+        except:
+            log.debug("The GL layer crashed when trying to read the context object from the widget")
+
+        if ctx is None:
+            log.debug("Giving up as we don't have a valid OpenGL context.")
+            sys.exit(1)
+
+        self.gl = None
+        log.debug("About to request QOpenGLFunctions for OpenGL version " + str(self.requestedVersion))
+
+        try:
+            self.gl = ctx.versionFunctions(self.profile)
+        except:
+            log.debug("The GL layer crashed while trying to get a QOpenGLFunctions object from the context")
 
         if self.gl is None:
-            log.debug("Could not get GL functions for the selected version, quitting")
+            log.debug("Giving up as we could not get access to a QOpenGLFunctions object for the selected version")
             sys.exit(1)
             return
 
