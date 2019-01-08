@@ -16,6 +16,8 @@ from .quadtest import QuadTest
 from .colortritest import ColorTriangleTest
 from .rotationtest import RotationTest
 
+from .util import log
+
 class MainWin(QWidget):
 
     def __init__(self):
@@ -71,6 +73,10 @@ class MainWin(QWidget):
         match = re.search(r"\d\d\s+\(([^)]+).*", item)
         test = match.group(1).lower()
 
+        msg = "ABOUT TO START TEST \"" + test + "\""
+        log.debug("\n\n" + msg)
+        log.debug("".ljust(len(msg), "-"))
+        
         if test == "dummy":
             self.dummy = DummyTest(self)
 
