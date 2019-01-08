@@ -10,6 +10,7 @@ from .dummytest import DummyTest
 from .noinittest import NoInitTest
 from .inittest21 import InitTest21
 from .inittest41 import InitTest41
+from .redtest import RedTest
 
 class MainWin(QWidget):
 
@@ -26,6 +27,7 @@ class MainWin(QWidget):
         self.testList.addItem("02 (NoInit) -- Show an empty default QOpenGLWidget to test if it can be constructed")
         self.testList.addItem("03 (Init21) -- Show an empty v2.1 QOpenGLWidget with basic initialization performed")
         self.testList.addItem("04 (Init41) -- Show an empty v4.1 Core QOpenGLWidget with basic initialization performed")
+        self.testList.addItem("05 (Red) -- Clear background to red, to test if we can work with the GL context")
 
         self.mainLayout.addWidget(self.testList)
 
@@ -72,6 +74,9 @@ class MainWin(QWidget):
 
         if test == "init41":
             self.inittest41 = InitTest41(self)
+
+        if test == "red":
+            self.red = RedTest(self)
 
     def _helpClick(self):
         helpWin = HelpWin(self)
