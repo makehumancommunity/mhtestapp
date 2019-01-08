@@ -5,7 +5,7 @@ from .abstracttest import AbstractTest
 
 from PyQt5.QtGui import *
 
-import array
+import numpy as np
 
 class _TriangleCanvas(Canvas):
 
@@ -42,23 +42,27 @@ class _TriangleCanvas(Canvas):
         self.program.bind()
 
         # Use arrays to specify two different triangles.
-        self.vertices1 = array.array('f', [-0.5, -0.5, 0.0, 0.5, 0.5, 0.0, 0.5, -0.5, 0.0])
-        self.vertices2 = array.array('f', [-0.8, 0.8, 0.0, -0.1, 0.8, 0.0, -0.8, 0.1, 0.0])
+        self.vertices1 = np.array([-0.5, -0.5, 0.0, 0.5, 0.5, 0.0, 0.5, -0.5, 0.0], dtype=np.dtype('f4'))
+        self.vertices2 = np.array([-0.8, 0.8, 0.0, -0.1, 0.8, 0.0, -0.8, 0.1, 0.0], dtype=np.dtype('f4'))
 
         # We'll take a shortcut here and use the same size/length for both objects. In reality
         # the following calculations should be done for each vertex array.
 
-        # Buffer info returns a tuple where the second part is number of elements in the array
-        self.verticesLength = self.vertices1.buffer_info()[1]
+        # Get the number of elements in the array
+        self.verticesLength = self.vertices1.size
+        log.debug("Array length", self.verticesLength)
 
         # Size in bytes for each element
         self.verticesItemSize = self.vertices1.itemsize
+        log.debug("Array cell size", self.verticesItemSize)
 
         # Total size in bytes for entire array
         self.verticesDataLength = self.verticesLength * self.verticesItemSize
+        log.debug("Array size in bytes", self.verticesDataLength)
 
         # Number of vertices in the array
         self.numberOfVertices = int(self.verticesLength / 3)
+        log.debug("Number of vertices", self.numberOfVertices)
 
         # Start specifying the first Vertex Array Object (VAO). The upside of this approach
         # is that we can keep all settings pertaining to the Vertex Buffer Object (VBO) specified
@@ -163,7 +167,7 @@ class TriangleTest(AbstractTest):
 
         self.outputWidget = _TriangleCanvas(parent)
 
-        self.loadImage("red.png")
+        self.loadImage("triangle.png")
 
         self.setActualOutputAndAddStretch(self.outputWidget)
 
