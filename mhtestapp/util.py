@@ -134,6 +134,18 @@ class MHLog:
             f.write(message)
             f.write("\n")
 
+    def trace(self, message, obj = None):
+
+        if not obj is None:
+            message = message.ljust(30,'.')
+            message = message + " : " + str(obj)
+
+        print(message)
+        #with open(self.logFile, "a") as f:
+        #    f.write(message)
+        #    f.write("\n")
+
+
 log = None
 
 if log is None:
