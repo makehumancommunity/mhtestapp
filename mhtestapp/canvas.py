@@ -15,9 +15,9 @@ import sys
 
 class Canvas(QOpenGLWidget):
 
-    def __init__(self, parent=None, requestedGLVersion=(2,1), logger=log):
+    def __init__(self, parent=None, requestedGLVersion=(2,1)):
 
-        self.log = logger
+        self.log = log
         
         self.debugMembers = False
 
@@ -35,12 +35,12 @@ class Canvas(QOpenGLWidget):
 
     # Override if necessary
     def minimumSizeHint(self):
-        self.log.debug("minimumSizeHint() is not overridden")
+        self.log.trace("minimumSizeHint() is not overridden")
         return QSize(400, 400)
 
     # Override if necessary
     def sizeHint(self):
-        self.log.debug("sizeHint() is not overridden")
+        self.log.trace("sizeHint() is not overridden")
         return QSize(500, 500)
 
     def dumpGLLogMessages(self, location = None):
@@ -147,17 +147,17 @@ class Canvas(QOpenGLWidget):
 
     # Override this
     def setupGL(self):
-        self.log.debug("setupGL() is not overridden")
+        self.log.trace("setupGL() is not overridden")
 
     # Override this
     def paintGL(self):
-        self.log.debug("paintGL() is not overridden")
+        self.log.trace("paintGL() is not overridden")
 
     # Override this
     def resizeGL(self, width, height):
-        self.log.debug("resizeGL() is not overridden")
+        self.log.trace("resizeGL() is not overridden")
 
     # Override this
     def closeGL(self):
-        self.log.debug("resizeGL() is not overridden")
+        self.log.trace("resizeGL() is not overridden")
 

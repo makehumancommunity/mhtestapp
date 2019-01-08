@@ -2,14 +2,12 @@
 
 from PyQt5.QtWidgets import *
 from .abstracttest import AbstractTest
-from .util import MHLog
+from .util import log
 
 class NoInitTest(AbstractTest):
 
     def __init__(self, parent):
         super().__init__(parent, "No init test")
-
-        self.log = MHLog("noinit.txt")
 
         self.outputWidget = QOpenGLWidget()
 
@@ -17,5 +15,6 @@ class NoInitTest(AbstractTest):
 
         self.setActualOutputAndAddStretch(self.outputWidget)
 
-        self.log.debug("About to show window")
+        log.debug("About to show window")
+
         self.show()

@@ -68,4 +68,5 @@ class AbstractTest(QMainWindow):
         path = imagePath(imageName)
         if not os.path.exists(path):
             print("File does not exist: " + str(path))
+            log.debug("File does not exist: " + str(path))
         self.image.setPixmap(QPixmap(path))
