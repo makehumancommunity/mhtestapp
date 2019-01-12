@@ -216,11 +216,11 @@ class _RotationCanvas(RotatableCanvas):
 class RotationTest(AbstractTest):
 
     def __init__(self, parent):
-        super().__init__(parent, "Draw a multicolored triangle")
+        super().__init__(parent, "Draw a triangle that can be rotated using the mouse")
 
         self.outputWidget = _RotationCanvas(parent)
 
-        self.loadImage("colortri.png")
+        self.loadImage("rotatable.png")
 
         self.setActualOutputAndAddStretch(self.outputWidget)
 
