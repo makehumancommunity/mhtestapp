@@ -6,6 +6,7 @@ from .abstracttest import AbstractTest
 from PyQt5.QtGui import *
 
 import numpy as np
+import math
 
 class _RotationCanvas(RotatableCanvas):
 
@@ -120,41 +121,63 @@ class _RotationCanvas(RotatableCanvas):
 
         self.rotatedVertices = np.copy(self.vertices)
 
-        # TODO:     Here we need to construct rotation matrices, and rotate the contents of rotatedVertices
-
-        # TODO:     We have rotations (in degrees) stored in xRot, yRot and zRot:
+        # We have rotations (in degrees) stored in xRot, yRot and zRot:
         log.trace("Current rotation: " + "(" + str(self.xRot) + ", " + str(self.yRot) + ", " + str(self.zRot) + ")")
 
-        # TODO:     First we'd probably need to construct a rotation matrix for each angle. The following are just
-        # TODO:     dummy variables. There is a GLSL code example at https://github.com/makehumancommunity/gl-test-cases/blob/master/12_mouse_rotation/vertex.glsl
+        # Rotation matrices are constructed according to "rotation matrix" in https://en.wikipedia.org/wiki/Rotation_matrix (3-dim case)
+        # the use of a 4x4 matrix results from the fact that we have to track 3 axis and the origin, rotation will only apply to the 3x3
+        # matrix, the value of 1 in the last row will avoid that the rotation modifies the origin
+        # but when you move the origin from 0,0,0 you have to take this also into consideration
+        # original MH code is in transformations.py, which creates the matrix for only one direction
+
+        # lets calculate the values for multiplication before, we need radians instead of degrees
+        rx =    math.radians(self.xRot)
+        ry =    math.radians(self.yRot)
+        rz =    math.radians(self.zRot)
+
+        sinax = math.sin(rx)
+        cosax = math.cos(rx)
+        sinay = math.sin(ry)
+        cosay = math.cos(ry)
+        sinaz = math.sin(rz)
+        cosaz = math.cos(rz)
 
         rx = np.array([
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
+            [1, 0,      0,     0],
+            [0, cosax,  sinax, 0],
+            [0, -sinax, cosax, 0],
+            [0, 0,      0,     1]
             ])
 
         ry = np.array([
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
+            [cosay, 0, -sinay, 0],
+            [0,     1, 0,      0],
+            [sinay, 0, cosay,  0],
+            [0,     0, 0,      1]
             ])
 
         rz = np.array([
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
+            [cosaz, -sinaz, 0, 0],
+            [sinaz, cosaz,  0, 0],
+            [0,     0,      1, 0],
+            [0,     0,      0, 1]
             ])
 
-        # TODO:     Then we'd have to somehow multiply these with the vertex coordinates. In GLSL this is done by
-        # TODO:     rotatedCoordinates = rz * ry * rx * somePosition, where "somePosition" is a (X, Y, Z) vector
+        #
+        # rotatedCoordinates = rz * ry * rx * somePosition, where "somePosition" is a the INPUT :-)
+        # lets precalculate the complete matrix, maybe not the fastest method ...
+        # and don't write rx * ry * rz maybe use @ but I like the old fashioned way
+        #
+        m = np.matmul (np.matmul (rx, ry), rz)
 
-        # ...
-
-        # TODO:     The following works insofar that the contents of rotatedVertices is copied to the drawing buffer
+        # is there a better way?!?! well normally vertices are not packed into a one-dimensional array I guess
+        # mostly it is done in a nested array or using tuples (x,y,z combination) :)
+        # and my knowlegde is nasty
+        #
+        for v in  range (0,self.numberOfVertices*3,3):
+            nx = np.array ([self.rotatedVertices[v], self.rotatedVertices[v+1], self.rotatedVertices[v+2], 1])
+            l = np.dot (nx, m)
+            self.rotatedVertices[v:v+2] = l[0:2]
 
         self.verticesBuffer1.bind()
         self.verticesBuffer1.write(0,self.rotatedVertices.tobytes(), self.verticesDataLength)
