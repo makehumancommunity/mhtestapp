@@ -144,8 +144,8 @@ class Canvas(QOpenGLWidget):
 
         self.log.debug("\nGeneral GL information")
         self.log.debug("--------------------------------")
-        self.log.debug("PROFILE",self.profile)
-        self.log.debug("FUNCTIONS",self.gl)
+        self.log.debug("Version profile object",self.profile)
+        self.log.debug("GL API compatibility wrapper",str(self.gl) + "  <--  look at instance name to figure out what GL API we work with")
 
         self.dumpGLLogMessages("initializeGL()")
 
@@ -154,10 +154,10 @@ class Canvas(QOpenGLWidget):
         glVendor = self.gl.glGetString(self.gl.GL_VENDOR)
         glRenderer = self.gl.glGetString(self.gl.GL_RENDERER)
 
-        self.log.debug("GL_VERSION", glVer)
-        self.log.debug("GL_SHADING_LANGUAGE_VERSION",glLangVer)
-        self.log.debug("GL_VENDOR", glVendor)
-        self.log.debug("GL_RENDERER", glRenderer)
+        self.log.debug("GL Version used by backend", glVer)
+        self.log.debug("Max GLSL version available",glLangVer)
+        self.log.debug("GL vendor", glVendor)
+        self.log.debug("GL renderer (gfx card)", glRenderer)
 
         self.log.debug("--------------------------------\n")
 
