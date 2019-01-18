@@ -128,10 +128,10 @@ class Canvas(QOpenGLWidget):
         try:
             self.gl = ctx.versionFunctions(self.profile)
         except:
-            log.debug("The GL layer crashed while trying to get a QOpenGLFunctions object from the context")
+            log.debug("A stack trace was thrown when requesting a QOpenGLFunctions object from the GL context. The most likely cause is that we asked for a higher GL version than was available, but it is also possible the GL context as such is faulty.")
 
         if self.gl is None:
-            log.debug("Giving up as we could not get access to a QOpenGLFunctions object for the selected version")
+            log.debug("Giving up as we could not get access to a QOpenGLFunctions object for the selected version. We'll do a sys.exit here, in order to avoid cascading error messages, so it is expected that the application closes.")
             sys.exit(1)
             return
 
